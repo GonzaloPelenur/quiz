@@ -2,17 +2,24 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
+import Card from "../../components/Card";
 
 const Page = () => {
   const [processedData, setProcessedData] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const handleCardSelect = (questionId, option) => {
+    setSelectedOptions((prevOptions) => [
+      ...prevOptions.filter((item) => item.questionId !== questionId),
+      { questionId, option },
+    ]);
+    console.log(`Selected option for question ${questionId}: ${option}`);
+  };
   useEffect(() => {
-    console.log("HOLA");
     async function fetchData() {
       try {
         const response = await fetch("/api/airtable"); // Updated the API endpoint
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setProcessedData(data.result.airtableData);
           // setProcessedData(data.result); // Access the data using the 'result' key
         } else {
@@ -28,23 +35,18 @@ const Page = () => {
 
   return (
     <div>
-      {/* Use the fetched data */}
-      <h1>Will put smth here</h1>
-      {/* <Form data={data} /> */}
-      <ul>
-        {processedData.map((item, index) => (
-          <li key={index}>
-            <div className="inline-flex">
-              <button className="bg-blue-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
-                {item.One}
-              </button>
-              <button className="bg-blue-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                {item.Two}
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {processedData.map((options, index) => (
+        <div key={index}>
+          <Card
+            options={options}
+            selectedOption={
+              selectedOptions.find((item) => item.questionId === index)
+                ?.option || ""
+            }
+            onSelect={(option) => handleCardSelect(index, option)}
+          />
+        </div>
+      ))}
     </div>
   );
 };

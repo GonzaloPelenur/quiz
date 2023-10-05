@@ -1,0 +1,35 @@
+.Card {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 25px;
+    margin: 10px;
+    font-size: large;
+    font-family: sans-serif;
+    background: #91dfdf;
+    /* background: linear-gradient(45deg, #ff0000, #ffbf00, #abc3f5, #ffbb00, #ffffff); */
+    box-shadow: 0px 0px 10px #b9b9b9;
+
+    color: white;
+    font-weight: bold; 
+    text-align: center; 
+    z-index: 1000;
+    border: 10px solid transparent;
+    width: 400px;
+  }
+  
+  .selected {
+    /* background: #91dfdf; */
+    background: linear-gradient(45deg, #91dfdf, #ffd968, #abc3f5, #deff66, #ffffff);
+    box-shadow: 0px 0px 10px #42c3ff;
+  }
+  
+  .button {
+    background: none; /* Make the background transparent */
+    color: #ffffff; /* Neon blue font color */
+    font-family: sans-serif;
+    font-size: 20px; /* Adjust font size as needed */
+    border: white;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #facf85, #a1bef9);
+  }
