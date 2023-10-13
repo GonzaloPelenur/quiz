@@ -1,4 +1,73 @@
 .test {
-    width: 500px;
+    width: 600px;
     text-align: center;
+  }
+
+
+.title {
+    font-size: 2em; /* or any other value that suits your needs */
+    font-weight: bold;
+    text-align: center;
+}
+
+.paragraph {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: medium; /* or any other value that suits your needs */
+    font-weight: bold;
+    text-align: center;
+}
+
+.button{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    display: inline-block;
+    border-radius: 5px;
+    /* padding: 25px; */
+    margin: 10px;
+    font-size: large;
+    font-family: sans-serif;
+    background: #ffd84a;
+    /* background: linear-gradient(45deg, #ff0000, #ffbf00, #abc3f5, #ffbb00, #ffffff); */
+    box-shadow: 0px 0px 20px #ab9132;
+
+    color: white;
+    font-weight: bold; 
+    text-align: center; 
+    z-index: 1000;
+    border: 10px solid transparent;
+    width: 100px;
+    height: 50px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    min-height: 100vh; /* Ensure the layout takes up at least the full viewport height */
+    max-width: 700px; /* Limit the width of the content */
+    margin: 0 auto; /* Horizontally center the content */
+    padding: 20px; /* Add padding as needed */
+  }
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #484848; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+
+.loaderContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }

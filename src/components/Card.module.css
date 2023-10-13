@@ -1,4 +1,4 @@
-.Card {
+.card {
     display: inline-block;
     border-radius: 5px;
     padding: 25px;
@@ -14,16 +14,16 @@
     text-align: center; 
     z-index: 1000;
     border: 10px solid transparent;
-    width: 300px;
+    width: 250px;
   }
   
-  .selected {
+.selected {
     /* background: #91dfdf; */
     background: linear-gradient(45deg, #91dfdf, #ffd968, #abc3f5, #deff66, #ffffff);
     box-shadow: 0px 0px 10px #42c3ff;
   }
   
-  .button {
+.button {
     background: none; /* Make the background transparent */
     color: #ffffff; /* Neon blue font color */
     font-family: sans-serif;

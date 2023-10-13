@@ -3,21 +3,22 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Card from "../../components/Card";
+import "../style/style.css";
 
 const Page = () => {
   const [processedData, setProcessedData] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [generatedText, setGeneratedText] = useState([`""`]);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+
   const handleCardSelect = (questionId, option) => {
     setSelectedOptions((prevOptions) => [
       ...prevOptions.filter((item) => item.questionId !== questionId),
       { questionId, option },
     ]);
-    // console.log(`Selected option for question ${questionId}: ${option}`);
   };
 
   const handleSubmit = async () => {
-    // const prompt = selectedOptions.map((opt) => opt.option).join(" ");
     const optionsList = selectedOptions.map((item) => item.option);
     if (optionsList.length !== processedData.length) {
       console.error("Empty or invalid prompt");
@@ -27,21 +28,17 @@ const Page = () => {
     const availableOptions = JSON.stringify(
       processedData.map((item) => [item.One, item.Two])
     );
-    // console.log(availableOptions);
-    // console.log(selectedPrompt);
-    // console.log("Prompt:", prompt);
     try {
       const response = await fetch("api/openAI", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ selectedPrompt, availableOptions }), // This sends the prompt to the server
+        body: JSON.stringify({ selectedPrompt, availableOptions }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Recieved data:", data);
         setGeneratedText(data.result);
       } else {
         console.error("API request failed");
@@ -54,11 +51,11 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/airtable"); // Updated the API endpoint
+        const response = await fetch("/api/airtable");
         if (response.ok) {
           const data = await response.json();
           setProcessedData(data.result.airtableData);
-          // setProcessedData(data.result); // Access the data using the 'result' key
+          setIsLoading(false); // Set isLoading to false when data is fetched
         } else {
           console.error("Error fetching data:", response.statusText);
         }
@@ -70,9 +67,19 @@ const Page = () => {
     fetchData();
   }, []);
 
+  if (isLoading) {
+    // Display loading indicator if isLoading is true
+    return (
+      <div className="loaderContainer">
+        <p className="paragraph">Loading Quiz!</p>
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1>Use this AI embeded Quiz to chose a Lab!</h1>
+      <h1 className="title">Choose your preferences!</h1>
       {processedData.map((options, index) => (
         <div key={index}>
           <Card
@@ -86,12 +93,15 @@ const Page = () => {
         </div>
       ))}
       <div style={{ textAlign: "center" }}>
-        <button onClick={handleSubmit}>Submit</button>
+        <button className="button" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
-      <div style={{ textAlign: "center" }}>
+      <div className="paragraph">
         <p>{generatedText}</p>
       </div>
     </div>
   );
 };
+
 export default Page;

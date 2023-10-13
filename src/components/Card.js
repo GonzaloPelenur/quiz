@@ -1,5 +1,4 @@
-import styles from "../components/Card.module.css";
-import { Button } from "@nextui-org/react";
+import styles from "../components/card.module.css";
 
 const Card = ({ options, selectedOption, onSelect }) => {
   return (
@@ -8,9 +7,10 @@ const Card = ({ options, selectedOption, onSelect }) => {
       {Object.keys(options).map((key) => (
         <button
           key={options[key]}
-          className={`${styles.Card} ${
+          className={`${styles.card} ${
             selectedOption === options[key] ? styles.selected : ""
           } ${styles.cardButton}`}
+          // className={styles.card}
           onClick={() => onSelect(options[key])}
         >
           {options[key]}
