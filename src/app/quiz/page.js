@@ -8,7 +8,9 @@ import "../style/style.css";
 const Page = () => {
   const [processedData, setProcessedData] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [generatedText, setGeneratedText] = useState([`""`]);
+  const [generatedText, setGeneratedText] = useState([
+    `Based on the student's choices, I would categorize them into the codeLab. Here's why: The student's preference for Yoga and Sneakers suggests a preference for a relaxed and casual environment. Choosing Techno over Jazz indicates a preference for modern and cutting-edge technology. Selecting Board Games over Video Games suggests a preference for problem-solving and strategizing. The preference for Comic Books and Documentary shows an interest in storytelling and knowledge. The love for Ice Cream and City Trips suggests a fun and adventurous personality. Choosing Sketching over Coding Puzzles indicates a strong creative and artistic inclination. The preference for Energy Drink suggests a high energy level and enthusiasm. The student's selection of an Analog Watch and Vintage over Smartwatch and Futuristic indicates a preference for classic and traditional styles. Choosing Acoustic over Electronic suggests a preference for more traditional and organic sounds. The love for the Library and Handwritten Letters shows a fondness for literature and a desire for a more personalized approach. The preference for a Campfire over a Lounge Bar suggests a preference for a cozy and intimate setting. The student's choice of a Notebook over a Tablet indicates a preference for more traditional and tactile methods. Selecting a Concert over a Podcast suggests a preference for live experiences and a love for music.`,
+  ]);
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   const handleCardSelect = (questionId, option) => {
@@ -78,7 +80,7 @@ const Page = () => {
   }
 
   return (
-    <div>
+    <body className="container">
       <h1 className="title">Choose your preferences!</h1>
       {processedData.map((options, index) => (
         <div key={index}>
@@ -97,10 +99,10 @@ const Page = () => {
           Submit
         </button>
       </div>
-      <div className="paragraph">
+      <div class="typewriter monospace">
         <p>{generatedText}</p>
       </div>
-    </div>
+    </body>
   );
 };
 
