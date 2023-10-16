@@ -97,7 +97,7 @@
     --bgColor: white;
     --lines: 500;
     --lineHeight: 1.5rem;
-    --timePerLine: 3s;
+    --timePerLine: 2s;
     --widthCh: 70;
     --width: calc(var(--widthCh) * 1ch);
     /* do not touch the time property!!! */
