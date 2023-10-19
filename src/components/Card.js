@@ -1,4 +1,4 @@
-import styles from "../components/card.module.css";
+import styles from "../components/Card.module.css";
 
 const Card = ({ options, selectedOption, onSelect }) => {
   return (
