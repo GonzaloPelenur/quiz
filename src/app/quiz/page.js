@@ -12,12 +12,60 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
   const [textIsLoading, setTextIsLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleCardSelect = (questionId, option) => {
     setSelectedOptions((prevOptions) => [
       ...prevOptions.filter((item) => item.questionId !== questionId),
       { questionId, option },
     ]);
+  };
+  const generateGPTResponse = async () => {
+    const optionsList = selectedOptions.map((item) => item.option);
+    if (optionsList.length !== processedData.length) {
+      console.error("Empty or invalid prompt");
+      return;
+    }
+    setSubmitted(true);
+    const selectedPrompt = JSON.stringify(optionsList);
+    const availableOptions = JSON.stringify(
+      processedData.map((item) => [item.One, item.Two])
+    );
+    setGeneratedText("");
+    setLoading(true);
+    try {
+      const response = await fetch("/api/openAI", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedPrompt, availableOptions }),
+      });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = response.body;
+      if (!data) {
+        return;
+      }
+      const reader = data.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      setTextIsLoading(false);
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value);
+        setGeneratedText((prev) => prev + chunkValue);
+        // console.log(chunkValue);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -98,7 +146,7 @@ const Page = () => {
           </div>
         ))}
         <div style={{ textAlign: "center" }}>
-          <button className="button" onClick={handleSubmit}>
+          <button className="button" onClick={generateGPTResponse}>
             Submit
           </button>
         </div>
@@ -118,6 +166,9 @@ const Page = () => {
           <div class="typewriter monospace">
             <p>{generatedText}</p>
           </div>
+          {/* <div>
+            <p>{generatedText}</p>
+          </div> */}
         </div>
       );
     }
